@@ -25,16 +25,27 @@ function signUp()
 function signUpValidation()
 {   
     var counter;
+    var r = /^[a-z][a-z0-9]{1,}(\.com)$/gm
     var signEmail = document.getElementById('signEmail').value;
-    var reservedEmails = JSON.parse(localStorage.getItem('Users'))
-    for(var i=0; i < reservedEmails.length;i++)
+    
+    if(signName == "" || signEmail=="" || signPass=="")
+    {
+        document.getElementById('alreadyReserved').innerHTML=
+            `
+                <p class="text-danger fw-bolder">All inputs is required</p>
+            `
+    }
+    else if(r.test(signEmail)==true)
+    {
+        var reservedEmails = JSON.parse(localStorage.getItem('Users'))
+        for(var i=0; i < reservedEmails.length;i++)
         {
             if(signEmail == reservedEmails[i].Email)
-                {
-                    counter = 1;
-                }
+            {
+                counter = 1;
+            }
         }
-    if(counter == 1)
+        if(counter == 1)
         {
             
             document.getElementById('alreadyReserved').innerHTML=
@@ -57,6 +68,16 @@ function signUpValidation()
             localStorage.setItem('Users', JSON.stringify(Accounts))
             document.getElementById('alreadyReserved').innerHTML=`<p class="text-success fw-bolder">Success</p>`;               
         }
+    }
+    
+    else
+    {
+        document.getElementById('alreadyReserved').innerHTML=
+            `
+                <p class="text-danger fw-bolder">Please enter a valid  email</p>
+            `
+    }
+    
 }
 function signUpClear()
 {
@@ -101,7 +122,13 @@ function log()
 
             `  
         }
+        logClear()
         welcome()
+}
+function logClear()
+{
+    logEmail.value=""
+    logPass.value ="" 
 }
 
  
