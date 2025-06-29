@@ -110,9 +110,9 @@ function log()
     if(counter == 1)
             {
                 document.getElementById("error").innerHTML = `` 
-                console.log("Login successful, redirecting...");
                 var btn = document.getElementById("logBtn")
                 btn.setAttribute('href',"home.htm")
+                localStorage.setItem("Success",JSON.stringify(logEmail))
             }
         else
         {
@@ -121,9 +121,10 @@ function log()
                 <p class="text-danger fs-4 fw-bold">Incorrect email or password</p>
 
             `  
+            logClear()
         }
-        logClear()
         welcome()
+        
 }
 function logClear()
 {
@@ -143,23 +144,18 @@ function logClear()
 
 function welcome()
 {
-    var greet;
-    var logEmail = document.getElementById('logEmail').value;
-    console.log(logEmail);
     
-    console.log(document.getElementById("welcome"));
-    
-    greet = JSON.parse(localStorage.getItem("Users"))
-    
-    for(i=0;i<greet.length;i++)
+    var greet = JSON.parse(localStorage.getItem("Success"))
+    var stored = JSON.parse(localStorage.getItem("Users"))
+    for(i=0;i<stored.length;i++)
         {
-            if(logEmail==greet[i].Email)
+            if(greet==stored[i].Email)
                 {
                     document.getElementById("welcome").innerHTML=
                     `
-                        <h1>Welcome ${greet[i].Name}</h1>
+                        <h1>Welcome ${stored[i].Name}</h1>
                     `
                 }
-        }
+        }        
 }
 
